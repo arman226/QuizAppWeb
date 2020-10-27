@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Button, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { getSubjects } from "../../../modules/subject/api";
 import { Subject } from "../../../modules/subject/types";
@@ -27,16 +27,7 @@ const Subjects: React.FC = () => {
 
   return (
     <React.Fragment>
-      <Typography
-        style={{
-          fontWeight: "bold",
-          fontSize: 20,
-          paddingTop: 10,
-          paddingBottom: 10,
-        }}
-      >
-        Subject
-      </Typography>
+      <Typography className={classes.titleText}>Subject</Typography>
       <Table subjectList={listOfSubjects} />
     </React.Fragment>
   );
@@ -45,6 +36,12 @@ const Subjects: React.FC = () => {
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
     flex: 1,
+  },
+  titleText: {
+    fontWeight: "bold",
+    fontSize: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
   },
 }));
 
