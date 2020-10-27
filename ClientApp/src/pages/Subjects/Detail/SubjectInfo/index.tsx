@@ -16,7 +16,7 @@ const SubjectInfo: React.FC = () => {
         <TextField
           style={{
             marginBottom: 10,
-            width: window.innerWidth * 0.5,
+            width: window.innerWidth * 0.3,
           }}
           id="standard-basic"
           label="Subject Name"
@@ -25,6 +25,7 @@ const SubjectInfo: React.FC = () => {
         <TextField
           style={{
             marginBottom: 10,
+            width: window.innerWidth * 0.3,
           }}
           multiline
           id="standard-basic"
