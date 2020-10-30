@@ -7,18 +7,18 @@ const Header: React.FC = () => {
 
   return (
     <Grid container className={classes.container}>
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         <Typography className={classes.headerText}>Subject Id</Typography>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         <Typography className={classes.headerText}>Subject</Typography>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         <Typography className={classes.headerText}>Description</Typography>
       </Grid>
-      <Grid item xs={3}>
+      {/* <Grid item xs={3}>
         <Typography className={classes.headerText}>Actions</Typography>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };

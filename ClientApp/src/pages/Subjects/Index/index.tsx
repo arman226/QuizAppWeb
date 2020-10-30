@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Typography } from "@material-ui/core";
+import { Typography, Grid, Button } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
+
 import { getSubjects } from "../../../modules/subject/api";
 import { Subject } from "../../../modules/subject/types";
 import Table from "./Table";
+import Create from "../Create";
 
 const Subjects: React.FC = () => {
   const classes = useStyles();
+
   const [listOfSubjects, setListOfSubjects] = useState<Subject[]>([]);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     getAllSubjects();
@@ -25,9 +29,33 @@ const Subjects: React.FC = () => {
     }
   };
 
+  const onHandleClose = () => {
+    setIsOpen(false);
+  };
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
   return (
     <React.Fragment>
-      <Typography className={classes.titleText}>Subject</Typography>
+      <Create isOpen={isOpen} onClose={onHandleClose} />
+      <Grid container>
+        <Grid item xs={9}>
+          <Typography className={classes.titleText}>Subject</Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={openModal}
+          >
+            + New Subject
+          </Button>
+        </Grid>
+      </Grid>
+
       <Table subjectList={listOfSubjects} />
     </React.Fragment>
   );

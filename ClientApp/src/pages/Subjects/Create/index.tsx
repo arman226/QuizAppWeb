@@ -13,7 +13,7 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
 }
-const CreateCategory: React.FC<Props> = ({ isOpen, onClose }) => {
+const SubjectCategory: React.FC<Props> = ({ isOpen, onClose }) => {
   const classes = useStyles();
 
   return (
@@ -26,7 +26,7 @@ const CreateCategory: React.FC<Props> = ({ isOpen, onClose }) => {
     >
       <Card className={classes.modal}>
         <Typography align="center" className={classes.header}>
-          Create Category
+          Create Subject
         </Typography>
         <Divider />
         <form noValidate autoComplete="off">
@@ -34,7 +34,7 @@ const CreateCategory: React.FC<Props> = ({ isOpen, onClose }) => {
             className={classes.textField}
             inputProps={{ maxLength: 40 }}
             id="standard-basic"
-            label="Category"
+            label="Subject"
           />
           <br />
           <TextField
@@ -92,4 +92,4 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default CreateCategory;
+export default SubjectCategory;

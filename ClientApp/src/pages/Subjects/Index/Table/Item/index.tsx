@@ -23,16 +23,16 @@ const Item: React.FC<Subject> = ({ subjectId, subject, description }) => {
   };
   return (
     <Grid container>
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         <Typography className={classes.headerText}>{subjectId}</Typography>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         <Typography className={classes.headerText}>{subject}</Typography>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={4}>
         <Typography className={classes.headerText}>{description}</Typography>
       </Grid>
-      <Grid item xs={3}>
+      {/* <Grid item xs={3}>
         <Button size="small" variant="contained" color="primary">
           Edit
         </Button>
@@ -44,7 +44,7 @@ const Item: React.FC<Subject> = ({ subjectId, subject, description }) => {
         >
           Delete
         </Button>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };
