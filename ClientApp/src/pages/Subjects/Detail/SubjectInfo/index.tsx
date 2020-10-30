@@ -1,5 +1,5 @@
-import React from "react";
-import { Typography, Grid, TextField } from "@material-ui/core";
+import React, { useState } from "react";
+import { Typography, Grid, TextField, Button } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 
 const SubjectInfo: React.FC = () => {
@@ -9,7 +9,12 @@ const SubjectInfo: React.FC = () => {
     <>
       <Grid container className={classes.container}>
         <Grid item xs={6}>
-          <Typography className={classes.headerText}>Subject Info</Typography>
+          <Typography className={classes.headerText}>
+            Subject Info{" "}
+            <Button variant="outlined" size="small">
+              ✏
+            </Button>
+          </Typography>
         </Grid>
       </Grid>
       <form noValidate autoComplete="off">
