@@ -1,8 +1,9 @@
 import React from "react";
 import { Grid, Typography, Button } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import SubjectInfo from "./SubjectInfo";
-import CategoriesList from "./CategoriesList";
+import QuestionInfo from "./QuestionInfo";
+import Option from "./Options";
+import Options from "./Options";
 
 const Detail: React.FC = () => {
   const classes = useStyles();
@@ -10,25 +11,28 @@ const Detail: React.FC = () => {
     <React.Fragment>
       <Grid container>
         <Grid item xs={9}>
-          <Typography className={classes.titleText}>Subject Details</Typography>
+          <Typography className={classes.titleText}>
+            Question Details
+          </Typography>
         </Grid>
 
         <Grid item xs={3}>
-          <Button size="small" color="primary">
+          <Button variant="contained" size="small" color="primary">
             Save
           </Button>
 
-          <Button size="small" color="secondary">
+          <Button variant="contained" size="small" color="secondary">
             Delete
           </Button>
 
-          <Button size="small">Cancel</Button>
+          <Button variant="contained" size="small">
+            Cancel
+          </Button>
         </Grid>
       </Grid>
 
-      <SubjectInfo />
-
-      <CategoriesList />
+      <QuestionInfo />
+      <Options />
     </React.Fragment>
   );
 };

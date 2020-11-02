@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Typography, Grid, Button } from "@material-ui/core";
+import {
+  Typography,
+  IconButton,
+  InputBase,
+  Paper,
+  Divider,
+} from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-
+import { Search, Add } from "@material-ui/icons";
 import { getSubjects } from "../../../modules/subject/api";
 import { Subject } from "../../../modules/subject/types";
 import Table from "./Table";
 import Create from "../Create";
+import { PRIMARY } from "../../../Theme/colors";
 
 const Subjects: React.FC = () => {
   const classes = useStyles();
@@ -40,21 +47,32 @@ const Subjects: React.FC = () => {
   return (
     <React.Fragment>
       <Create isOpen={isOpen} onClose={onHandleClose} />
-      <Grid container>
-        <Grid item xs={9}>
-          <Typography className={classes.titleText}>Subject</Typography>
-        </Grid>
-        <Grid item xs={3}>
-          <Button
-            variant="contained"
-            color="primary"
+      <Typography className={classes.titleText}>Subject Overview</Typography>
+      <div className={classes.searchContainer}>
+        <Paper className={classes.searchRoot} elevation={1}>
+          <InputBase
+            className={classes.input}
+            placeholder="Search"
+            inputProps={{ "aria-label": "search" }}
+          />
+          <IconButton
+            aria-label="search"
             size="small"
-            onClick={openModal}
+            className={classes.iconButton}
           >
-            + New Subject
-          </Button>
-        </Grid>
-      </Grid>
+            <Search />
+          </IconButton>
+          <Divider orientation="vertical" className={classes.divider} />
+          <IconButton
+            aria-label="add"
+            className={classes.iconButton}
+            onClick={openModal}
+            size="small"
+          >
+            <Add style={{ color: PRIMARY }} />
+          </IconButton>
+        </Paper>
+      </div>
 
       <Table subjectList={listOfSubjects} />
     </React.Fragment>
@@ -70,6 +88,32 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: 20,
     paddingTop: 10,
     paddingBottom: 10,
+    display: "flex",
+    backgroundColor: "#fff",
+  },
+  searchRoot: {
+    display: "flex",
+    alignContent: "flex-start",
+    alignSelf: "center",
+    width: "30%",
+    marginBottom: 15,
+    padding: 10,
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    width: "80%",
+  },
+  iconButton: {
+    padding: 10,
+  },
+  divider: {
+    height: 35,
+    margin: 4,
+  },
+  searchContainer: {
+    width: "100%",
+    justifyContent: "center",
+    display: "flex",
   },
 }));
 

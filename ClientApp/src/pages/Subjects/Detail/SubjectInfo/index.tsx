@@ -1,55 +1,81 @@
-import React, { useState } from "react";
-import { Typography, Grid, TextField, Button } from "@material-ui/core";
+import React from "react";
+import { Typography, TextField, IconButton, Paper } from "@material-ui/core";
+import { Edit } from "@material-ui/icons";
 import { makeStyles, Theme } from "@material-ui/core/styles";
+import { PRIMARY } from "../../../../Theme/colors";
 
 const SubjectInfo: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <>
-      <Grid container className={classes.container}>
-        <Grid item xs={6}>
-          <Typography className={classes.headerText}>
-            Subject Info{" "}
-            <Button variant="outlined" size="small">
-              ✏
-            </Button>
-          </Typography>
-        </Grid>
-      </Grid>
-      <form noValidate autoComplete="off">
+    <Paper className={classes.container}>
+      <div className={classes.head}>
+        <Typography className={classes.headerText}>Subject Info</Typography>
+        <IconButton size="small">
+          <Edit className={classes.icon} />
+        </IconButton>
+      </div>
+
+      <form noValidate autoComplete="off" className={classes.form}>
+        <Typography>Subject</Typography>
         <TextField
-          style={{
-            marginBottom: 10,
-            width: window.innerWidth * 0.3,
-          }}
-          id="standard-basic"
-          label="Subject Name"
+          required
+          className={classes.subject}
+          id="subjectName"
+          placeholder="Subject Name"
+          variant="outlined"
         />
-        <br />
+        {/* <br /> */}
+        <Typography>Description</Typography>
         <TextField
-          style={{
-            marginBottom: 10,
-            width: window.innerWidth * 0.3,
-          }}
+          className={classes.description}
           multiline
-          id="standard-basic"
-          label="Description"
+          id="description"
+          placeholder="Description"
+          variant="outlined"
+          rows={4}
         />
-        <br />
+
+        {/* <br /> */}
       </form>
-    </>
+    </Paper>
   );
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
     flex: 1,
-    width: window.innerWidth,
+    padding: 15,
+    marginTop: 20,
+  },
+  head: {
+    flexDirection: "row",
+    display: "flex",
   },
   headerText: {
     fontWeight: "bold",
     fontSize: 15,
+    marginRight: 5,
+  },
+  icon: {
+    fontSize: 18,
+    color: PRIMARY,
+  },
+  description: {
+    marginBottom: 10,
+    fontSize: 18,
+    width: "80%",
+  },
+  subject: {
+    marginBottom: 10,
+    fontSize: 18,
+    width: "80%",
+  },
+  form: {
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
   },
 }));
 

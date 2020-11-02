@@ -10,7 +10,7 @@ const Item: React.FC<Category> = ({ categoryId, category, description }) => {
 
   const navigateToDetail = () => {
     history.push({
-      pathname: "/categoryDetail",
+      pathname: "/questionDetail",
       state: { categoryId },
     });
   };

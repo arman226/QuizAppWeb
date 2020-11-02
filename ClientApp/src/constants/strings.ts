@@ -1,1 +1,1 @@
-export const APP_NAME = 'Quizz App'
+export const APP_NAME = 'Pagsulat At Pagbasa'
