@@ -17,17 +17,15 @@ const Detail: React.FC = () => {
         </Grid>
 
         <Grid item xs={3}>
-          <Button variant="contained" size="small" color="primary">
+          <Button size="small" color="primary">
             Save
           </Button>
 
-          <Button variant="contained" size="small" color="secondary">
+          <Button size="small" color="secondary">
             Delete
           </Button>
 
-          <Button variant="contained" size="small">
-            Cancel
-          </Button>
+          <Button size="small">Cancel</Button>
         </Grid>
       </Grid>
 

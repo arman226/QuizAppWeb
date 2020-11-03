@@ -2,6 +2,7 @@ import React from "react";
 import { Grid, Typography, Button } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import CategoryInfo from "./CategoryInfo";
+import QuestionList from "./QuestionList";
 
 const Detail: React.FC = () => {
   const classes = useStyles();
@@ -15,21 +16,25 @@ const Detail: React.FC = () => {
         </Grid>
 
         <Grid item xs={3}>
-          <Button variant="contained" size="small" color="primary">
+          <Button size="small" color="primary">
             Save
           </Button>
 
-          <Button variant="contained" size="small" color="secondary">
+          <Button size="small" color="secondary">
             Delete
           </Button>
 
-          <Button variant="contained" size="small">
-            Cancel
-          </Button>
+          <Button size="small">Cancel</Button>
         </Grid>
       </Grid>
-
-      <CategoryInfo />
+      <Grid container>
+        <Grid item xs={8}>
+          <QuestionList />
+        </Grid>
+        <Grid item xs={3}>
+          <CategoryInfo />
+        </Grid>
+      </Grid>
     </React.Fragment>
   );
 };

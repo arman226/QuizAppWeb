@@ -17,7 +17,7 @@ const Item: React.FC<Category> = ({ categoryId, category, description }) => {
   };
 
   return (
-    <Grid item xs={4}>
+    <Grid item xs={6}>
       <Box borderLeft={2} borderRadius={4} borderColor={PRIMARY}>
         <Card className={classes.card}>
           <ButtonBase
@@ -26,9 +26,11 @@ const Item: React.FC<Category> = ({ categoryId, category, description }) => {
             disableRipple
             onClick={navigateToDetail}
           >
-            <Typography>{category}</Typography>
+            <Typography className={classes.title}>{category}</Typography>
 
-            <Typography>{description}</Typography>
+            <Typography className={classes.description}>
+              {description}
+            </Typography>
           </ButtonBase>
         </Card>
       </Box>
@@ -42,6 +44,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     borderWidth: 2,
     borderColor: "black",
     width: "100%",
+    flexDirection: "column",
+    display: "flex",
+    alignItems: "flex-start",
   },
   headerText: {
     fontWeight: "bold",
@@ -56,6 +61,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     borderWidth: 2,
     display: "flex",
     height: "100%",
+  },
+  title: {
+    fontWeight: "bold",
+  },
+  description: {
+    color: "#C6C6C6",
   },
 }));
 

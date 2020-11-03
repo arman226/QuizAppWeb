@@ -25,10 +25,15 @@ const Detail: React.FC = () => {
           <Button size="small">Cancel</Button>
         </Grid>
       </Grid>
+      <Grid container>
+        <Grid item xs={8} spacing={1}>
+          <CategoriesList />
+        </Grid>
 
-      <SubjectInfo />
-
-      <CategoriesList />
+        <Grid item xs={3} spacing={1}>
+          <SubjectInfo />
+        </Grid>
+      </Grid>
     </React.Fragment>
   );
 };

@@ -27,7 +27,7 @@ const CategoriesList: React.FC = () => {
           <Add className={classes.icon} />
         </IconButton>
       </div>
-      <Grid container>
+      <Grid container className={classes.list}>
         <Item categoryId={0} category={"test"} description="none" />
         <Item categoryId={0} category={"test"} description="none" />
         <Item categoryId={0} category={"test"} description="none" />
@@ -59,6 +59,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     flex: 1,
     padding: 15,
     marginTop: 20,
+  },
+  list: {
+    justifyContent: "center",
+    width: "100%",
+    flex: 1,
   },
 }));
 
