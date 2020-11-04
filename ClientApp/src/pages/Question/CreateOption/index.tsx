@@ -40,18 +40,10 @@ const CreateOption: React.FC<Props> = ({ isOpen, onClose }) => {
         </form>
 
         <div>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-          >
+          <Button color="primary" className={classes.button}>
             Create
           </Button>
-          <Button
-            variant="contained"
-            className={classes.button}
-            onClick={onClose}
-          >
+          <Button className={classes.button} onClick={onClose}>
             Cancel
           </Button>
         </div>
@@ -68,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: window.innerWidth * 0.35,
     alignItems: "center",
     display: "flex",
-    padding: 10,
+    padding: 20,
     flexDirection: "column",
     marginBottom: 10,
   },

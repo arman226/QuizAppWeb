@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Grid, IconButton, Paper } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Add } from "@material-ui/icons";
 import Item from "./Item";
 import CreateCategory from "../../../Category/Create";
 import { PRIMARY } from "../../../../Theme/colors";
+import { getCategoriesBySubject } from "../../../../modules/category/api";
+import { Category } from "../../../../modules/category/types";
 
-const CategoriesList: React.FC = () => {
+interface Props {
+  subjectId: number;
+}
+
+const CategoriesList: React.FC<Props> = ({ subjectId }) => {
   const classes = useStyles();
+  const [categories, setCategories] = useState<Category[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const onClose = () => {
@@ -18,9 +25,19 @@ const CategoriesList: React.FC = () => {
     setIsOpen(true);
   };
 
+  useEffect(() => {
+    getCategories();
+  }, []);
+  const getCategories = async () => {
+    const { status, data } = await getCategoriesBySubject(subjectId);
+    if (status === 200) {
+      setCategories(data);
+    }
+  };
+
   return (
     <Paper className={classes.container}>
-      <CreateCategory isOpen={isOpen} onClose={onClose} />
+      <CreateCategory isOpen={isOpen} onClose={onClose} subjectId={subjectId} />
       <div className={classes.head}>
         <Typography className={classes.headerText}>Categories</Typography>
         <IconButton size="small" onClick={openModal}>
@@ -28,12 +45,14 @@ const CategoriesList: React.FC = () => {
         </IconButton>
       </div>
       <Grid container className={classes.list}>
-        <Item categoryId={0} category={"test"} description="none" />
-        <Item categoryId={0} category={"test"} description="none" />
-        <Item categoryId={0} category={"test"} description="none" />
-        <Item categoryId={0} category={"test"} description="none" />
-        <Item categoryId={0} category={"test"} description="none" />
-        <Item categoryId={0} category={"test"} description="none" />
+        {categories.map(({ category, categoryId, description }, idx) => (
+          <Item
+            key={idx}
+            categoryId={categoryId}
+            category={category}
+            description={description}
+          />
+        ))}
       </Grid>
     </Paper>
   );
@@ -61,7 +80,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: 20,
   },
   list: {
-    justifyContent: "center",
     width: "100%",
     flex: 1,
   },

@@ -43,6 +43,16 @@ namespace QuizzApp.Controllers
 
         }
 
+        [HttpGet]
+        [Route("GetAllCategoriesBySubject")]
+
+        public List<Category> GetAllCategoriesBySubject(int subjectId)
+        {
+            return categoryRepository.GetCategoriesBySubject(subjectId);
+
+        }
+
+
 
 
         #endregion

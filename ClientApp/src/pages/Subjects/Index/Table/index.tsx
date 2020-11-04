@@ -59,11 +59,15 @@ const Table: React.FC<ListOfSubjects> = ({ subjectList }) => {
     subject: string,
     description: string
   ) => () => {
-    history.push("./subjectDetail");
+    history.push({
+      pathname: "./subjectDetail",
+      search: `${subjectId}`,
+      state: { subjectId, subject, description },
+    });
   };
 
   return (
-    <Paper>
+    <Paper className={classes.container}>
       <TableContainer>
         <TableSet stickyHeader aria-label="sticky table">
           <TableHead>
@@ -109,6 +113,7 @@ const Table: React.FC<ListOfSubjects> = ({ subjectList }) => {
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
     flex: 1,
+    marginBottom: 20,
   },
 }));
 
