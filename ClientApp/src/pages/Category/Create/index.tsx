@@ -20,12 +20,14 @@ const CreateCategory: React.FC<Props> = ({ isOpen, onClose, subjectId }) => {
   const classes = useStyles();
   const [category, setCategory] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [disabled, setDisabled] = useState<boolean>(true);
 
   const handleCategoryChange = (
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) => {
     const value = event.target.value as string;
     setCategory(value);
+    setDisabled(value === "" && description === "");
   };
 
   const handleDescriptionChange = (
@@ -33,6 +35,7 @@ const CreateCategory: React.FC<Props> = ({ isOpen, onClose, subjectId }) => {
   ) => {
     const value = event.target.value as string;
     setDescription(value);
+    setDisabled(value === "" && category === "");
   };
 
   const onSubmit = async () => {
@@ -94,6 +97,7 @@ const CreateCategory: React.FC<Props> = ({ isOpen, onClose, subjectId }) => {
               color="primary"
               className={classes.button}
               onClick={onSubmit}
+              disabled={disabled}
             >
               Create
             </Button>

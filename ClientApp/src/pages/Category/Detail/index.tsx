@@ -1,38 +1,48 @@
 import React from "react";
-import { Grid, Typography, Button } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import { Grid, Typography, IconButton } from "@material-ui/core";
+import { Delete } from "@material-ui/icons";
 import { makeStyles, Theme } from "@material-ui/core/styles";
+import { deactivateCategory } from "../../../modules/category/api";
 import CategoryInfo from "./CategoryInfo";
 import QuestionList from "./QuestionList";
 
+interface Param {
+  categoryId: number;
+}
 const Detail: React.FC = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const { categoryId } = history.location.state as Param;
+
+  const deactivate = async () => {
+    const { status, statusText } = await deactivateCategory(categoryId, 0);
+    if (status === 200) {
+      history.goBack();
+    } else {
+      alert("Something went wrong. Please try again");
+    }
+    console.log(statusText);
+  };
   return (
     <React.Fragment>
-      <Grid container>
-        <Grid item xs={9}>
-          <Typography className={classes.titleText}>
-            Category Details
-          </Typography>
-        </Grid>
+      <div className={classes.head}>
+        <Typography className={classes.titleText}>Category Details</Typography>
+        <IconButton
+          size="small"
+          className={classes.iconButton}
+          onClick={deactivate}
+        >
+          <Delete className={classes.icon} />
+        </IconButton>
+      </div>
 
-        <Grid item xs={3}>
-          <Button size="small" color="primary">
-            Save
-          </Button>
-
-          <Button size="small" color="secondary">
-            Delete
-          </Button>
-
-          <Button size="small">Cancel</Button>
-        </Grid>
-      </Grid>
       <Grid container>
         <Grid item xs={8}>
-          <QuestionList />
+          <QuestionList categoryId={categoryId} />
         </Grid>
         <Grid item xs={3}>
-          <CategoryInfo />
+          <CategoryInfo categoryId={categoryId} />
         </Grid>
       </Grid>
     </React.Fragment>
@@ -48,6 +58,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: 20,
     paddingTop: 10,
     paddingBottom: 10,
+  },
+  icon: {
+    fontSize: 20,
+    color: "#BA000D",
+  },
+  head: {
+    flexDirection: "row",
+    display: "flex",
+  },
+  iconButton: {
+    marginLeft: 10,
+    padding: 0,
   },
 }));
 

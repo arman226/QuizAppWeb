@@ -1,13 +1,21 @@
-import React, { useState } from "react";
-import { Typography, Grid, Button, Paper, IconButton } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Typography, Grid, Paper, IconButton } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Add } from "@material-ui/icons";
 import Item from "./Item";
 import { PRIMARY } from "../../../../Theme/colors";
+import { getQuestionsByCategory } from "../../../../modules/question/api";
+import { Question } from "../../../../modules/question/types";
 
-const CategoriesList: React.FC = () => {
+interface Props {
+  categoryId: number;
+}
+const CategoriesList: React.FC<Props> = ({ categoryId }) => {
   const classes = useStyles();
+  const history = useHistory();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [questions, setQuestions] = useState<Question[]>([]);
 
   const onClose = () => {
     setIsOpen(false);
@@ -17,21 +25,41 @@ const CategoriesList: React.FC = () => {
     setIsOpen(true);
   };
 
+  const getQuestions = async () => {
+    const { data, status } = await getQuestionsByCategory(categoryId);
+    if (status === 200) {
+      setQuestions(data);
+    }
+  };
+
+  const navigateToQuestionCreation = () => {
+    history.push({
+      pathname: "/createQuestion",
+      state: { categoryId },
+    });
+  };
+
+  useEffect(() => {
+    getQuestions();
+  }, []);
+
   return (
     <Paper className={classes.container}>
       <div className={classes.head}>
         <Typography className={classes.headerText}>Questions</Typography>
-        <IconButton size="small" onClick={openModal}>
+        <IconButton size="small" onClick={navigateToQuestionCreation}>
           <Add className={classes.icon} />
         </IconButton>
       </div>
       <Grid container className={classes.list}>
-        <Item categoryId={0} category={"test"} description="none" />
-        <Item categoryId={0} category={"test"} description="none" />
-        <Item categoryId={0} category={"test"} description="none" />
-        <Item categoryId={0} category={"test"} description="none" />
-        <Item categoryId={0} category={"test"} description="none" />
-        <Item categoryId={0} category={"test"} description="none" />
+        {questions.map(({ questionId, questionCode, question, title }) => (
+          <Item
+            questionId={questionId}
+            questionCode={questionCode}
+            question={question}
+            title={title}
+          />
+        ))}
       </Grid>
     </Paper>
   );

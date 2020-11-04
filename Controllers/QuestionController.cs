@@ -56,6 +56,17 @@ namespace QuizzApp.Controllers
 
         }
 
+        [HttpGet]
+        [Route("GetQuestionInfoById")]
+
+        public Question GetQuestionInfoById(int questionId)
+        {
+            return questionRepository.GetQuestionInfoById(questionId);
+
+        }
+
+
+
         #endregion
 
         #region Post Requests

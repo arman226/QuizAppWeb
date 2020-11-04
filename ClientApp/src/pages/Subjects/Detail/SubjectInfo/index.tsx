@@ -14,9 +14,6 @@ const SubjectInfo: React.FC<Subject> = ({
   const classes = useStyles();
   const [disabledSave, setDisabledSave] = useState<boolean>(true);
   const [canEdit, setCanEdit] = useState<boolean>(true);
-  const handleEditButton = () => {
-    setCanEdit(!canEdit);
-  };
   const [sub, setSub] = useState<Subject>({
     subjectId,
     subject: "",
@@ -24,6 +21,10 @@ const SubjectInfo: React.FC<Subject> = ({
   });
   const [tempSubject, setTempSubject] = useState<string>("");
   const [tempDescription, setTempDescription] = useState<string>("");
+
+  const handleEditButton = () => {
+    setCanEdit(!canEdit);
+  };
 
   const handleSubjectChange = (
     event: React.ChangeEvent<{ name?: string; value: unknown }>

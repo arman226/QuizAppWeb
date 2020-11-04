@@ -19,5 +19,7 @@ namespace QuizzApp.Services.IRepositories
 
         public List<Question> GetQuestionsById(int categoryId);
 
+        public Question GetQuestionInfoById(int questionId);
+
     }
 }

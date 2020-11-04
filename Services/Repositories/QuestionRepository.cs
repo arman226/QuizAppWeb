@@ -23,6 +23,8 @@ namespace QuizzApp.Services.Repositories
         #region SQL Queries 
         private const string SQL_QUESTION_GET_ALL = "EXEC Question_Select_All";
         private const string SQL_QUESTION_GET_BY_ID = "EXEC Questions_Get_By_Id @categoryId";
+        private const string SQL_QUESTIONINFO_GET_BY_ID = "EXEC Get_QuestionInfo_By_Id @questionId";
+
         #endregion
         public int CreateQuestionAsync(string questionCode, string title, string question, int userId, int categoryId, List<Option> options)
         {
@@ -100,6 +102,20 @@ namespace QuizzApp.Services.Repositories
                 };
                 var affectedRows = connection.Execute(SP_QUESTION_DEACTIVATE, param);
                 return affectedRows;
+            }
+        }
+
+        public Question GetQuestionInfoById(int questionId)
+        {
+            using (var connection = _databaseStrategy.Connection)
+            {
+                var param = new
+                {
+                    questionId = questionId
+                };
+                var data = connection.Query<Question>(SQL_QUESTIONINFO_GET_BY_ID, param).FirstOrDefault();
+                return data;
+
             }
         }
     }

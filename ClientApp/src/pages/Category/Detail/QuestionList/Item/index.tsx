@@ -2,17 +2,22 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Typography, Grid, Card, ButtonBase, Box } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import { Category } from "../../../../../modules/category/types";
+import { Question } from "../../../../../modules/question/types";
 import { PRIMARY } from "../../../../../Theme/colors";
 
-const Item: React.FC<Category> = ({ categoryId, category, description }) => {
+const Item: React.FC<Question> = ({
+  questionId,
+  questionCode,
+  title,
+  question,
+}) => {
   const classes = useStyles();
   const history = useHistory();
 
   const navigateToDetail = () => {
     history.push({
       pathname: "/questionDetail",
-      state: { categoryId },
+      state: { questionId },
     });
   };
 
@@ -26,11 +31,9 @@ const Item: React.FC<Category> = ({ categoryId, category, description }) => {
             disableRipple
             onClick={navigateToDetail}
           >
-            <Typography className={classes.title}>{category}</Typography>
+            <Typography className={classes.title}>{title}</Typography>
 
-            <Typography className={classes.description}>
-              {description}
-            </Typography>
+            <Typography className={classes.description}>{question}</Typography>
           </ButtonBase>
         </Card>
       </Box>
