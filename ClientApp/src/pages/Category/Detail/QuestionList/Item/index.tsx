@@ -5,11 +5,20 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Question } from "../../../../../modules/question/types";
 import { PRIMARY } from "../../../../../Theme/colors";
 
-const Item: React.FC<Question> = ({
+interface Props {
+  questionId: number;
+  categoryId: number;
+  title: string;
+  question: string;
+  questionCode: string;
+}
+
+const Item: React.FC<Props> = ({
   questionId,
   questionCode,
   title,
   question,
+  categoryId,
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -17,7 +26,7 @@ const Item: React.FC<Question> = ({
   const navigateToDetail = () => {
     history.push({
       pathname: "/questionDetail",
-      state: { questionId },
+      state: { questionId, categoryId },
     });
   };
 

@@ -58,6 +58,7 @@ const CategoriesList: React.FC<Props> = ({ categoryId }) => {
             questionCode={questionCode}
             question={question}
             title={title}
+            categoryId={categoryId}
           />
         ))}
       </Grid>

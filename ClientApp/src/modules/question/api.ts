@@ -36,3 +36,25 @@ export const createQuestion = async (
     },
   });
 };
+
+
+export const updateQuestion = async (
+  params: any,
+  config?: AxiosRequestConfig,
+)=> {
+  const queryString = `api/Question/UpdateQuestion`;
+  return Axios.post(queryString, params, {
+    headers:{
+      'Content-Type':'text/json',
+    },
+  });
+};
+
+
+export const deactivateQuestion = async (
+  questionCode: string,
+  config?: AxiosRequestConfig,
+)=> {
+  const queryString = `api/Question/DeactivateQuestion?questionCode=${questionCode}`;
+  return Axios.post(queryString,config);
+};

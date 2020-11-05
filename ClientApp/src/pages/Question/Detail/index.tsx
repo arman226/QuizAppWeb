@@ -2,18 +2,26 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Grid, Typography, Button } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import { getQuestionInfoById } from "../../../modules/question/api";
+import {
+  deactivateQuestion,
+  getQuestionInfoById,
+  updateQuestion,
+} from "../../../modules/question/api";
 import QuestionInfo from "./QuestionInfo";
-import Options from "./Options";
-import { Question } from "../../../modules/question/types";
+import Options from "../CreateQuestion/Options";
+import { ApiParams, Question } from "../../../modules/question/types";
+import { Option } from "../../../modules/option/types";
+import { getOptionsBySubjectCode } from "../../../modules/option/api";
+import { arrayEquals } from "../../../helpers/array.helper";
 
 interface Params {
   questionId: number;
+  categoryId: number;
 }
 const Detail: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { questionId } = history.location.state as Params;
+  const { questionId, categoryId } = history.location.state as Params;
   const [questionInfo, setQuestionInfo] = useState<Question>({
     questionId,
     questionCode: "",
@@ -23,6 +31,8 @@ const Detail: React.FC = () => {
   const [questionCode, setQuestionCode] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [question, setQuestion] = useState<string>("");
+  const [options, setOptions] = useState<Option[]>([]);
+  const [tempOptions, setTempOptions] = useState<Option[]>([]);
 
   useEffect(() => {
     fetchQuestionInfo();
@@ -35,6 +45,64 @@ const Detail: React.FC = () => {
       setQuestionCode(data.questionCode);
       setQuestion(data.question);
       setTitle(data.title);
+      fetchOptions(data.questionCode);
+    }
+  };
+
+  const fetchOptions = async (subjectCode: string) => {
+    const { status, data, statusText } = await getOptionsBySubjectCode(
+      subjectCode
+    );
+    if (status === 200) {
+      setOptions(data);
+      setTempOptions(data);
+    } else {
+      console.log("fetching");
+      alert(JSON.stringify(data));
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (question != "" && title != "" && tempOptions.length > 0) {
+      const param = {
+        question,
+        questionCode,
+        title,
+        categoryId,
+        userId: 0,
+        options: tempOptions,
+      } as ApiParams;
+      console.log(param);
+
+      const areOptionsEqual = arrayEquals(options, tempOptions);
+
+      alert(areOptionsEqual);
+
+      if (
+        areOptionsEqual &&
+        question === questionInfo.question &&
+        title === questionInfo.title
+      ) {
+        alert("You did not change anything");
+        history.goBack();
+      } else {
+        const { status, statusText, request } = await updateQuestion(param);
+        if (status === 200) {
+          history.goBack();
+        }
+        console.log(request + "" + statusText);
+      }
+    } else {
+      alert(
+        "Please fill out all required fields and make it sure that you added options to choose from"
+      );
+    }
+  };
+
+  const deleteQuestion = async () => {
+    const { status } = await deactivateQuestion(questionCode);
+    if (status === 200) {
+      history.goBack();
     }
   };
 
@@ -48,11 +116,11 @@ const Detail: React.FC = () => {
         </Grid>
 
         <Grid item xs={3}>
-          <Button size="small" color="primary">
+          <Button size="small" color="primary" onClick={handleSubmit}>
             Save
           </Button>
 
-          <Button size="small" color="secondary">
+          <Button size="small" color="secondary" onClick={deleteQuestion}>
             Delete
           </Button>
 
@@ -67,7 +135,11 @@ const Detail: React.FC = () => {
         setTitle={setTitle}
         setQuestion={setQuestion}
       />
-      <Options />
+      <Options
+        questionCode={questionCode}
+        option={tempOptions}
+        setOptions={setTempOptions}
+      />
     </React.Fragment>
   );
 };

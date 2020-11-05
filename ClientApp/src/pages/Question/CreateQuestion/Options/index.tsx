@@ -111,6 +111,7 @@ const Options: React.FC<Props> = ({ option, setOptions, questionCode }) => {
                     </IconButton>
                   </div>
                 </Grid>
+                <br />
               </div>
             ))}
           </Grid>
@@ -151,6 +152,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   itemContainer: {
     display: "flex",
     flexDirection: "row",
+    flex: 1,
   },
 }));
 
