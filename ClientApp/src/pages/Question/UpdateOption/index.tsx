@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   Typography,
   Modal,
@@ -16,13 +16,15 @@ interface Props {
   options: Option[];
   setOptions: Dispatch<SetStateAction<Option[]>>;
   questionCode: string;
+  index: number;
 }
-const CreateOption: React.FC<Props> = ({
+const UpdateOption: React.FC<Props> = ({
   isOpen,
   onClose,
   setOptions,
   options,
   questionCode,
+  index,
 }) => {
   const classes = useStyles();
   const [optionName, setOptionName] = useState<string>("");
@@ -33,19 +35,30 @@ const CreateOption: React.FC<Props> = ({
     setOptionName(value);
   };
 
+  useEffect(() => {
+    if (options.length > 0) {
+      setOptionName(options[index].optionName);
+    }
+  }, [index]);
   const create = () => {
+    let tempOptions = options;
     let option = {
       questionCode,
       optionName,
-      isCorrectAnswer: 0,
+      isCorrectAnswer: tempOptions[index].isCorrectAnswer,
     };
 
-    let tempOptions = options;
-    tempOptions.push(option);
+    tempOptions[index] = option;
     setOptions(tempOptions);
 
     onClose();
-    setOptionName("");
+  };
+
+  const removeOption = () => {
+    let tempOptions = options;
+    tempOptions.splice(index, 1);
+    setOptions(tempOptions);
+    onClose();
   };
 
   return (
@@ -58,7 +71,7 @@ const CreateOption: React.FC<Props> = ({
     >
       <Card className={classes.modal}>
         <Typography align="center" className={classes.header}>
-          Create Option
+          Update Option
         </Typography>
         <Divider />
         <form noValidate autoComplete="off">
@@ -75,8 +88,17 @@ const CreateOption: React.FC<Props> = ({
 
         <div>
           <Button color="primary" className={classes.button} onClick={create}>
-            Create
+            Update
           </Button>
+
+          <Button
+            color="secondary"
+            className={classes.button}
+            onClick={removeOption}
+          >
+            Delete
+          </Button>
+
           <Button className={classes.button} onClick={onClose}>
             Cancel
           </Button>
@@ -110,4 +132,4 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default CreateOption;
+export default UpdateOption;

@@ -26,7 +26,7 @@ const Options: React.FC = () => {
 
   return (
     <Paper className={classes.container}>
-      <CreateOption isOpen={isOpen} onClose={onClose} />
+      {/* <CreateOption isOpen={isOpen} onClose={onClose} options={null} /> */}
       <div className={classes.head}>
         <Typography className={classes.headerText}>Categories</Typography>
         <IconButton size="small" onClick={openModal}>

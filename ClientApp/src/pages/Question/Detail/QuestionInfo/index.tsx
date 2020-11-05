@@ -1,23 +1,42 @@
-import React, { useState } from "react";
-import {
-  Typography,
-  Grid,
-  TextField,
-  Button,
-  IconButton,
-  Paper,
-} from "@material-ui/core";
+import React, { useState, Dispatch, ChangeEvent, SetStateAction } from "react";
+import { Typography, TextField, IconButton, Paper } from "@material-ui/core";
 import { Edit } from "@material-ui/icons";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { PRIMARY } from "../../../../Theme/colors";
 
-const QuestionInfo: React.FC = () => {
+interface Props {
+  questionCode: string;
+  question: string;
+  title: string;
+  setQuestion: Dispatch<SetStateAction<string>>;
+  setTitle: Dispatch<SetStateAction<string>>;
+}
+const QuestionInfo: React.FC<Props> = ({
+  questionCode,
+  title,
+  question,
+  setQuestion,
+  setTitle,
+}) => {
   const classes = useStyles();
   const [canEdit, setCanEdit] = useState<boolean>(true);
   const handleEditButton = () => {
     setCanEdit(!canEdit);
   };
 
+  const handleChangeQuestion = (
+    event: React.ChangeEvent<{ name?: string; value: unknown }>
+  ) => {
+    const value = event.target.value as string;
+    setQuestion(value);
+  };
+
+  const handleChangeTitle = (
+    event: React.ChangeEvent<{ name?: string; value: unknown }>
+  ) => {
+    const value = event.target.value as string;
+    setTitle(value);
+  };
   return (
     <Paper className={classes.container}>
       <div className={classes.head}>
@@ -36,6 +55,7 @@ const QuestionInfo: React.FC = () => {
           }}
           id="standard-basic"
           label="Question Code"
+          value={questionCode}
         />
         <br />
         <TextField
@@ -44,6 +64,8 @@ const QuestionInfo: React.FC = () => {
           className={classes.title}
           id="standard-basic"
           label="Title"
+          value={title}
+          onChange={handleChangeTitle}
         />
         <br />
         <TextField
@@ -53,6 +75,8 @@ const QuestionInfo: React.FC = () => {
           multiline
           id="standard-basic"
           label="Question"
+          value={question}
+          onChange={handleChangeQuestion}
         />
         <br />
       </form>

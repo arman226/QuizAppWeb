@@ -18,6 +18,7 @@ namespace QuizzApp.Controllers
     public class QuestionController : ControllerBase
     {
         QuestionHelper questionHelper = new QuestionHelper();
+
         IQuestionRepository questionRepository = new QuestionRepository();
         IOptionRepository optionRepository = new OptionRepository();
         ILogger<QuestionController> logger;
@@ -64,6 +65,16 @@ namespace QuizzApp.Controllers
             return questionRepository.GetQuestionInfoById(questionId);
 
         }
+
+        //12QSTN-13
+        [HttpGet]
+        [Route("GetOptionBySubject")]
+        public List<Option> GetOptionsBySubject(string subjectCode)
+        {
+            return optionRepository.GetOptionsBySubject(subjectCode);
+
+        }
+
 
 
 

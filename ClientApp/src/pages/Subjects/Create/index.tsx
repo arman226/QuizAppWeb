@@ -9,8 +9,6 @@ import {
   Box,
 } from "@material-ui/core";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import useFetch from "../../../hooks/useFetch";
-import { Subject } from "../../../modules/subject/types";
 import { createSubject } from "../../../modules/subject/api";
 
 interface Props {
