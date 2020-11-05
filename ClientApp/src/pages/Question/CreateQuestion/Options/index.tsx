@@ -1,4 +1,4 @@
-import React, { useState, Dispatch, SetStateAction, useEffect } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import {
   Typography,
   Paper,
@@ -9,12 +9,11 @@ import {
   FormControlLabel,
   Grid,
 } from "@material-ui/core";
-import { Delete, Edit } from "@material-ui/icons";
+import { Edit } from "@material-ui/icons";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Add } from "@material-ui/icons";
 import CreateOption from "../../CreateOption";
 import UpdateOption from "../../UpdateOption";
-import Alert from "../../../../components/Alert";
 import { PRIMARY } from "../../../../Theme/colors";
 import { Option } from "../../../../modules/option/types";
 
@@ -93,10 +92,7 @@ const Options: React.FC<Props> = ({ option, setOptions, questionCode }) => {
           value={correctAnswer}
           onChange={onOptionChange}
         >
-          <Grid
-            container
-            style={{ flex: 1, display: "flex", flexDirection: "column" }}
-          >
+          <Grid container className={classes.gridContainer}>
             {option.map(({ optionName }, idx) => (
               <div key={idx} className={classes.itemContainer}>
                 <Grid item xs={10}>
@@ -156,6 +152,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "row",
     flex: 1,
+  },
+  gridContainer: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
   },
 }));
 
