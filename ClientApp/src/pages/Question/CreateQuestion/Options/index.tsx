@@ -93,7 +93,10 @@ const Options: React.FC<Props> = ({ option, setOptions, questionCode }) => {
           value={correctAnswer}
           onChange={onOptionChange}
         >
-          <Grid container>
+          <Grid
+            container
+            style={{ flex: 1, display: "flex", flexDirection: "column" }}
+          >
             {option.map(({ optionName }, idx) => (
               <div key={idx} className={classes.itemContainer}>
                 <Grid item xs={10}>
