@@ -22,17 +22,18 @@ const Detail: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
   const { questionId, categoryId } = history.location.state as Params;
-  const [questionInfo, setQuestionInfo] = useState<Question>({
-    questionId,
+  const [questionInfo, setQuestionInfo] = useState<ApiParams>({
     questionCode: "",
     title: "",
     question: "",
-  } as Question);
+    userId: 0,
+    categoryId,
+    options: [],
+  });
   const [questionCode, setQuestionCode] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [question, setQuestion] = useState<string>("");
   const [options, setOptions] = useState<Option[]>([]);
-  const [tempOptions, setTempOptions] = useState<Option[]>([]);
 
   useEffect(() => {
     fetchQuestionInfo();
@@ -41,7 +42,12 @@ const Detail: React.FC = () => {
   const fetchQuestionInfo = async () => {
     const { status, data } = await getQuestionInfoById(questionId);
     if (status === 200) {
-      setQuestionInfo(data);
+      const tempQuestionInfo = questionInfo;
+      tempQuestionInfo.title = data.title;
+      tempQuestionInfo.question = data.question;
+      tempQuestionInfo.questionCode = data.questionCode;
+
+      setQuestionInfo(tempQuestionInfo);
       setQuestionCode(data.questionCode);
       setQuestion(data.question);
       setTitle(data.title);
@@ -50,33 +56,33 @@ const Detail: React.FC = () => {
   };
 
   const fetchOptions = async (subjectCode: string) => {
-    const { status, data, statusText } = await getOptionsBySubjectCode(
-      subjectCode
-    );
+    const { status, data } = await getOptionsBySubjectCode(subjectCode);
     if (status === 200) {
+      const tempQuestionInfo = questionInfo;
+      tempQuestionInfo.options = data;
+      setQuestionInfo(tempQuestionInfo);
       setOptions(data);
-      setTempOptions(data);
     } else {
-      console.log("fetching");
-      alert(JSON.stringify(data));
     }
   };
 
   const handleSubmit = async () => {
-    if (question != "" && title != "" && tempOptions.length > 0) {
+    if (question != "" && title != "" && options.length > 0) {
       const param = {
         question,
         questionCode,
         title,
         categoryId,
         userId: 0,
-        options: tempOptions,
+        options,
       } as ApiParams;
-      console.log(param);
 
-      const areOptionsEqual = arrayEquals(options, tempOptions);
-
-      alert(areOptionsEqual);
+      alert(
+        JSON.stringify(param.options) +
+          "?" +
+          JSON.stringify(questionInfo.options)
+      );
+      const areOptionsEqual = arrayEquals(param.options, questionInfo.options);
 
       if (
         areOptionsEqual &&
@@ -84,13 +90,12 @@ const Detail: React.FC = () => {
         title === questionInfo.title
       ) {
         alert("You did not change anything");
-        history.goBack();
+        // history.goBack();
       } else {
-        const { status, statusText, request } = await updateQuestion(param);
+        const { status } = await updateQuestion(param);
         if (status === 200) {
           history.goBack();
         }
-        console.log(request + "" + statusText);
       }
     } else {
       alert(
@@ -137,8 +142,8 @@ const Detail: React.FC = () => {
       />
       <Options
         questionCode={questionCode}
-        option={tempOptions}
-        setOptions={setTempOptions}
+        option={options}
+        setOptions={setOptions}
       />
     </React.Fragment>
   );

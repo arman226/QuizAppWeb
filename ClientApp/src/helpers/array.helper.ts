@@ -1,5 +1,5 @@
 var _= require('lodash')
 
-export const arrayEquals=(a:Array<any>, b:Array<any>)=> {
-   return _.isEqual(a,b);
+export const arrayEquals=(a:any, b:any)=> {
+   return JSON.stringify(a)===JSON.stringify(b)
   }

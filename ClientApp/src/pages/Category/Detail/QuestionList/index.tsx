@@ -87,7 +87,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: 20,
   },
   list: {
-    justifyContent: "center",
     width: "100%",
     flex: 1,
   },

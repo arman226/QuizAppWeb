@@ -1,4 +1,4 @@
-import React, { useState, Dispatch, SetStateAction } from "react";
+import React, { useState, Dispatch, SetStateAction, useEffect } from "react";
 import {
   Typography,
   Paper,
@@ -60,6 +60,14 @@ const Options: React.FC<Props> = ({ option, setOptions, questionCode }) => {
     });
     setOptions(tempOptions);
   };
+
+  useEffect(() => {
+    if (option.length > 0) {
+      setCorrectAnswer(
+        option[option.findIndex((a) => a.isCorrectAnswer === 1)].optionName
+      );
+    }
+  }, [option]);
 
   return (
     <Paper className={classes.container}>
