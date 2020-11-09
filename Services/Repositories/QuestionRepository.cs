@@ -2,6 +2,7 @@
 using QuizzApp.Abstraction;
 using QuizzApp.Data;
 using QuizzApp.Models;
+using QuizzApp.Models.ViewModels;
 using QuizzApp.Services.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -117,6 +118,27 @@ namespace QuizzApp.Services.Repositories
                 return data;
 
             }
+        }
+
+        public List<QuestionOptions> GetQuestionOptionsByCategory(int categoryId)
+        {
+            List<QuestionOptions> questionOptions = new List<QuestionOptions>();
+            List<Question> questions = GetQuestionsById(categoryId);
+
+            foreach(var question in questions)
+            {
+                QuestionOptions item = new QuestionOptions();
+                item.questionDetails = question;
+                item.options = optionRepository.GetOptionsBySubject(question.questionCode);
+                questionOptions.Add(item);
+               
+            }
+
+
+            return questionOptions;
+
+
+
         }
     }
 }

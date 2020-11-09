@@ -1,4 +1,5 @@
 ﻿using QuizzApp.Models;
+using QuizzApp.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace QuizzApp.Services.IRepositories
         public List<Question> GetQuestionsById(int categoryId);
 
         public Question GetQuestionInfoById(int questionId);
+
+        public List<QuestionOptions> GetQuestionOptionsByCategory(int categoryId);
 
     }
 }

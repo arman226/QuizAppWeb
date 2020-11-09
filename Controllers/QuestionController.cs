@@ -39,6 +39,16 @@ namespace QuizzApp.Controllers
         }
 
         [HttpGet]
+        [Route("GetQuestionOptionByCategory")]
+
+        public ActionResult GetQuestionOptionByCategory(int categoryId)
+        {
+            return Ok(questionRepository.GetQuestionOptionsByCategory(categoryId));
+        }
+
+
+
+        [HttpGet]
         [Route("GetAllQuestions")]
 
         public List<Question> GetAllQuestions ()
